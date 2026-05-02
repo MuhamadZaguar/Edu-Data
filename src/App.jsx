@@ -123,15 +123,21 @@ export default function App() {
           />
           {currentView === "dashboard" && <Stats data={dataSiswa} />}
           {currentView === "info" && (
-            <>
-              <div className="flex items-center justify-end mb-4">
+            <section className="space-y-4">
+              <div className="bg-white border border-slate-100 rounded-2xl p-5 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                  <h2 className="text-xl font-bold text-slate-800">Informasi Siswa</h2>
+                  <p className="text-sm text-slate-500 mt-1">
+                    Menampilkan {sorted.length} dari {dataSiswa.length} data siswa
+                  </p>
+                </div>
                 <button
                   onClick={() => {
                     setSiswaToEdit(null);
                     setCurrentView("form");
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
-                  className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition-all shadow-md"
+                  className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-lg text-sm font-bold transition-all shadow-md"
                 >
                   <Plus className="w-4 h-4" /> Tambah Siswa
                 </button>
@@ -151,7 +157,7 @@ export default function App() {
                 error={apiError}
                 onRetry={loadSiswaFromApi}
               />
-            </>
+            </section>
           )}
           {currentView === "form" && (
             <FormSiswa
