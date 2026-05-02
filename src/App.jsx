@@ -97,6 +97,7 @@ export default function App() {
 
   const filtered = dataSiswa.filter(s => s.nama.toLowerCase().includes(filter.toLowerCase()) || s.nis.includes(filter));
   const sorted = [...filtered].sort((a, b) => sortOrder === "asc" ? a.nilai - b.nilai : b.nilai - a.nilai);
+  const topStudents = [...dataSiswa].sort((a, b) => b.nilai - a.nilai).slice(0, 10);
 
   // Jika belum login, tampilkan halaman login
   if (!isAuthenticated) {
@@ -121,7 +122,53 @@ export default function App() {
               setSiswaToEdit(null);
             }}
           />
-          {currentView === "dashboard" && <Stats data={dataSiswa} />}
+          {currentView === "dashboard" && (
+            <section className="space-y-4">
+              <Stats data={dataSiswa} />
+              <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                <div className="p-5 md:p-6 border-b border-slate-100 bg-slate-50/70">
+                  <h2 className="text-lg font-bold text-slate-800">10 Siswa dengan Nilai Tertinggi</h2>
+                  <p className="text-sm text-slate-500 mt-1">Data diurutkan dari nilai paling tinggi</p>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left">
+                    <thead className="bg-slate-50 text-slate-500 text-xs uppercase font-semibold">
+                      <tr>
+                        <th className="px-6 py-4">Peringkat</th>
+                        <th className="px-6 py-4">Nama</th>
+                        <th className="px-6 py-4">NIS</th>
+                        <th className="px-6 py-4">Kelas</th>
+                        <th className="px-6 py-4">Nilai</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {topStudents.length > 0 ? (
+                        topStudents.map((siswa, index) => (
+                          <tr key={siswa.id} className="hover:bg-slate-50 transition-colors">
+                            <td className="px-6 py-4 font-semibold text-indigo-600">#{index + 1}</td>
+                            <td className="px-6 py-4 font-medium text-slate-800">{siswa.nama}</td>
+                            <td className="px-6 py-4 text-slate-500">{siswa.nis}</td>
+                            <td className="px-6 py-4">
+                              <span className="px-2 py-0.5 bg-slate-100 rounded text-xs">{siswa.kelas}</span>
+                            </td>
+                            <td className="px-6 py-4">
+                              <span className="px-2 py-1 rounded font-bold text-xs bg-green-100 text-green-700">{siswa.nilai}</span>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan="5" className="px-6 py-10 text-center text-slate-400">
+                            Belum ada data siswa
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+          )}
           {currentView === "info" && (
             <section className="space-y-4">
               <div className="bg-white border border-slate-100 rounded-2xl p-5 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4">
