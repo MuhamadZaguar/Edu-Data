@@ -10,6 +10,7 @@ import TableSiswa from "./components/TableSiswa";
 import ToastNotification from "./components/ToastNotification";
 import { APP_LOGO } from "./constants/appConfig";
 import { fetchSiswaFromApi } from "./utils/studentApi";
+import StudentManager from "./utils/StudentManager";
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -65,12 +66,13 @@ export default function App() {
   };
 
   const handleSaveSiswa = (siswa) => {
+    const manager = new StudentManager(dataSiswa);
     if (siswaToEdit) {
-      setDataSiswa(dataSiswa.map(s => s.id === siswa.id ? siswa : s));
+      setDataSiswa(manager.updateStudent(siswa));
       setSiswaToEdit(null);
       showToast('Data diperbarui!');
     } else {
-      setDataSiswa([siswa, ...dataSiswa]);
+      setDataSiswa(manager.addStudent(siswa));
       showToast('Data ditambahkan!');
     }
     setCurrentView("info");
@@ -78,7 +80,8 @@ export default function App() {
 
   const handleHapusSiswa = (id) => {
     if(window.confirm('Hapus data ini?')) {
-      setDataSiswa(dataSiswa.filter(s => s.id !== id));
+      const manager = new StudentManager(dataSiswa);
+      setDataSiswa(manager.deleteStudent(id));
       showToast('Data dihapus', 'error');
     }
   };
@@ -97,7 +100,7 @@ export default function App() {
 
   const filtered = dataSiswa.filter(s => s.nama.toLowerCase().includes(filter.toLowerCase()) || s.nis.includes(filter));
   const sorted = [...filtered].sort((a, b) => sortOrder === "asc" ? a.nilai - b.nilai : b.nilai - a.nilai);
-  const topStudents = [...dataSiswa].sort((a, b) => b.nilai - a.nilai).slice(0, 10);
+  const topStudents = new StudentManager(dataSiswa).getTopStudents(10);
 
   // Jika belum login, tampilkan halaman login
   if (!isAuthenticated) {
