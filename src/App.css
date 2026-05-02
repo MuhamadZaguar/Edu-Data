@@ -1,0 +1,96 @@
+.animated-page {
+  background-image: radial-gradient(circle at 15% 20%, rgba(99, 102, 241, 0.08), transparent 30%),
+    radial-gradient(circle at 85% 10%, rgba(59, 130, 246, 0.08), transparent 35%);
+}
+
+.animated-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.animated-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(4px);
+  opacity: 0.45;
+  animation: orb-float 11s ease-in-out infinite;
+}
+
+.animated-bg--login .orb-1,
+.animated-bg--app .orb-1 {
+  width: 260px;
+  height: 260px;
+  left: -70px;
+  top: 12%;
+  background: rgba(99, 102, 241, 0.35);
+}
+
+.animated-bg--login .orb-2,
+.animated-bg--app .orb-2 {
+  width: 340px;
+  height: 340px;
+  right: -100px;
+  top: 2%;
+  background: rgba(56, 189, 248, 0.28);
+  animation-delay: -3s;
+}
+
+.animated-bg--login .orb-3,
+.animated-bg--app .orb-3 {
+  width: 240px;
+  height: 240px;
+  left: 35%;
+  bottom: -120px;
+  background: rgba(139, 92, 246, 0.28);
+  animation-delay: -6s;
+}
+
+.animated-bg--app .orb-1 {
+  top: 20%;
+}
+
+.animated-bg--app .orb-3 {
+  left: 65%;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out both;
+}
+
+.float-gentle {
+  animation: logo-float 3s ease-in-out infinite;
+}
+
+@keyframes orb-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -18px, 0) scale(1.05);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes logo-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
