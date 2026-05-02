@@ -4,6 +4,7 @@ import { Edit, UserPlus, X, Plus } from "lucide-react";
 const FormSiswa = ({ onSave, siswaToEdit, onCancelEdit }) => {
   const initialFormData = {
     nama: "",
+    foto: "",
     username: "",
     email: "",
     phone: "",
@@ -21,6 +22,16 @@ const FormSiswa = ({ onSave, siswaToEdit, onCancelEdit }) => {
     else setFormData(initialFormData);
   }, [siswaToEdit]);
 
+  const handlePhotoChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      setFormData((prev) => ({ ...prev, foto: reader.result }));
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.nama || !formData.username || !formData.email || !formData.nis || !formData.kelas || !formData.nilai) return;
@@ -36,6 +47,7 @@ const FormSiswa = ({ onSave, siswaToEdit, onCancelEdit }) => {
       nis: formData.nis,
       kelas: formData.kelas,
       nilai: Number(formData.nilai),
+      foto: formData.foto,
     });
     setFormData(initialFormData);
   };
@@ -65,6 +77,37 @@ const FormSiswa = ({ onSave, siswaToEdit, onCancelEdit }) => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          {siswaToEdit && (
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
+              <p className="text-sm font-semibold text-slate-700 mb-3">Foto Siswa</p>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                <img
+                  src={formData.foto || `https://ui-avatars.com/api/?name=${encodeURIComponent(formData.nama || "Siswa")}&background=4f46e5&color=fff`}
+                  alt="Foto siswa"
+                  className="w-20 h-20 rounded-xl object-cover border border-slate-200 bg-white"
+                />
+                <div className="flex-1">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handlePhotoChange}
+                    className="w-full text-sm text-slate-600 file:mr-3 file:px-3 file:py-2 file:rounded-lg file:border-0 file:bg-indigo-600 file:text-white file:font-semibold hover:file:bg-indigo-700"
+                  />
+                  <p className="text-xs text-slate-500 mt-2">Upload foto baru jika ingin mengganti foto siswa.</p>
+                </div>
+                {formData.foto && (
+                  <button
+                    type="button"
+                    onClick={() => setFormData((prev) => ({ ...prev, foto: "" }))}
+                    className="px-3 py-2 rounded-lg border border-slate-200 text-sm text-slate-600 hover:bg-slate-100"
+                  >
+                    Hapus Foto
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <label className="text-sm font-semibold text-slate-700">Nama Lengkap</label>

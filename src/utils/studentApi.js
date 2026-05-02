@@ -2,6 +2,7 @@ export const mapUsersToSiswa = (users = []) =>
   users.map((user, index) => ({
     id: user.id,
     nama: user.name,
+    foto: `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=4f46e5&color=fff`,
     username: user.username,
     email: user.email,
     phone: user.phone,
