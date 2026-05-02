@@ -48,6 +48,11 @@ const TableSiswa = ({
         <thead className="bg-slate-50 text-slate-500 text-xs uppercase font-semibold">
           <tr>
             <th className="px-6 py-4">Nama</th>
+            <th className="px-6 py-4">Username</th>
+            <th className="px-6 py-4">Email</th>
+            <th className="px-6 py-4">Telepon</th>
+            <th className="px-6 py-4">Kota</th>
+            <th className="px-6 py-4">Perusahaan</th>
             <th className="px-6 py-4">NIS</th>
             <th className="px-6 py-4">Kelas</th>
             <th className="px-6 py-4">Nilai</th>
@@ -57,13 +62,13 @@ const TableSiswa = ({
         <tbody className="divide-y divide-slate-100">
           {isLoading ? (
             <tr>
-              <td colSpan="5" className="px-6 py-10 text-center text-slate-500 font-medium">
+              <td colSpan="11" className="px-6 py-10 text-center text-slate-500 font-medium">
                 Memuat data dari API...
               </td>
             </tr>
           ) : error ? (
             <tr>
-              <td colSpan="5" className="px-6 py-8 text-center">
+              <td colSpan="11" className="px-6 py-8 text-center">
                 <div className="bg-red-50 border border-red-200 text-red-700 rounded-xl p-4 inline-block">
                   <p className="font-semibold">Gagal mengambil data API</p>
                   <p className="text-sm mt-1">{error}</p>
@@ -77,6 +82,11 @@ const TableSiswa = ({
             data.map((s) => (
               <tr key={s.id} className="hover:bg-slate-50 transition-colors">
                 <td className="px-6 py-4 font-medium">{s.nama}</td>
+                <td className="px-6 py-4 text-slate-600">{s.username || "-"}</td>
+                <td className="px-6 py-4 text-slate-600">{s.email || "-"}</td>
+                <td className="px-6 py-4 text-slate-600">{s.phone || "-"}</td>
+                <td className="px-6 py-4 text-slate-600">{s.kota || "-"}</td>
+                <td className="px-6 py-4 text-slate-600">{s.perusahaan || "-"}</td>
                 <td className="px-6 py-4 text-slate-500">{s.nis}</td>
                 <td className="px-6 py-4">
                   <span className="px-2 py-0.5 bg-slate-100 rounded text-xs">{s.kelas}</span>
@@ -98,7 +108,7 @@ const TableSiswa = ({
             ))
           ) : (
             <tr>
-              <td colSpan="5" className="px-6 py-10 text-center text-slate-400">
+              <td colSpan="11" className="px-6 py-10 text-center text-slate-400">
                 Data tidak ditemukan
               </td>
             </tr>

@@ -98,7 +98,18 @@ export default function App() {
     showToast('Export berhasil!');
   };
 
-  const filtered = dataSiswa.filter(s => s.nama.toLowerCase().includes(filter.toLowerCase()) || s.nis.includes(filter));
+  const filtered = dataSiswa.filter((s) => {
+    const keyword = filter.toLowerCase();
+    return (
+      s.nama?.toLowerCase().includes(keyword) ||
+      s.username?.toLowerCase().includes(keyword) ||
+      s.email?.toLowerCase().includes(keyword) ||
+      s.phone?.toLowerCase().includes(keyword) ||
+      s.kota?.toLowerCase().includes(keyword) ||
+      s.perusahaan?.toLowerCase().includes(keyword) ||
+      s.nis?.toLowerCase().includes(keyword)
+    );
+  });
   const sorted = [...filtered].sort((a, b) => sortOrder === "asc" ? a.nilai - b.nilai : b.nilai - a.nilai);
   const topStudents = new StudentManager(dataSiswa).getTopStudents(10);
 

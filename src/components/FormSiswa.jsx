@@ -2,24 +2,42 @@ import React, { useEffect, useState } from "react";
 import { Edit, UserPlus, X, Plus } from "lucide-react";
 
 const FormSiswa = ({ onSave, siswaToEdit, onCancelEdit }) => {
-  const [formData, setFormData] = useState({ nama: "", nis: "", kelas: "", nilai: "" });
+  const initialFormData = {
+    nama: "",
+    username: "",
+    email: "",
+    phone: "",
+    kota: "",
+    perusahaan: "",
+    website: "",
+    nis: "",
+    kelas: "",
+    nilai: "",
+  };
+  const [formData, setFormData] = useState(initialFormData);
 
   useEffect(() => {
-    if (siswaToEdit) setFormData(siswaToEdit);
-    else setFormData({ nama: "", nis: "", kelas: "", nilai: "" });
+    if (siswaToEdit) setFormData({ ...initialFormData, ...siswaToEdit });
+    else setFormData(initialFormData);
   }, [siswaToEdit]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.nama || !formData.nis || !formData.kelas || !formData.nilai) return;
+    if (!formData.nama || !formData.username || !formData.email || !formData.nis || !formData.kelas || !formData.nilai) return;
     onSave({
       id: siswaToEdit ? siswaToEdit.id : Date.now(),
       nama: formData.nama,
+      username: formData.username,
+      email: formData.email,
+      phone: formData.phone,
+      kota: formData.kota,
+      perusahaan: formData.perusahaan,
+      website: formData.website,
       nis: formData.nis,
       kelas: formData.kelas,
       nilai: Number(formData.nilai),
     });
-    setFormData({ nama: "", nis: "", kelas: "", nilai: "" });
+    setFormData(initialFormData);
   };
 
   return (
@@ -57,6 +75,80 @@ const FormSiswa = ({ onSave, siswaToEdit, onCancelEdit }) => {
                 className="w-full px-4 py-2.5 rounded-lg border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
                 placeholder="Contoh: Budi Santoso"
                 required
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold text-slate-700">Username</label>
+              <input
+                type="text"
+                value={formData.username}
+                onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                className="w-full px-4 py-2.5 rounded-lg border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+                placeholder="Contoh: Bret"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold text-slate-700">Email</label>
+              <input
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                className="w-full px-4 py-2.5 rounded-lg border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+                placeholder="Contoh: siswa@email.com"
+                required
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold text-slate-700">No. Telepon</label>
+              <input
+                type="text"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                className="w-full px-4 py-2.5 rounded-lg border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+                placeholder="Contoh: 08123456789"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold text-slate-700">Kota</label>
+              <input
+                type="text"
+                value={formData.kota}
+                onChange={(e) => setFormData({ ...formData, kota: e.target.value })}
+                className="w-full px-4 py-2.5 rounded-lg border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+                placeholder="Contoh: Surabaya"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold text-slate-700">Perusahaan</label>
+              <input
+                type="text"
+                value={formData.perusahaan}
+                onChange={(e) => setFormData({ ...formData, perusahaan: e.target.value })}
+                className="w-full px-4 py-2.5 rounded-lg border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+                placeholder="Contoh: Romaguera-Crona"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold text-slate-700">Website</label>
+              <input
+                type="text"
+                value={formData.website}
+                onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                className="w-full px-4 py-2.5 rounded-lg border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+                placeholder="Contoh: sekolah.sch.id"
               />
             </div>
 
