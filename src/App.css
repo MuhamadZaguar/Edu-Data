@@ -1,6 +1,8 @@
 .animated-page {
-  background-image: radial-gradient(circle at 15% 20%, rgba(99, 102, 241, 0.08), transparent 30%),
-    radial-gradient(circle at 85% 10%, rgba(59, 130, 246, 0.08), transparent 35%);
+  background-image: radial-gradient(circle at 10% 15%, rgba(99, 102, 241, 0.06), transparent 28%),
+    radial-gradient(circle at 90% 10%, rgba(59, 130, 246, 0.04), transparent 34%),
+    linear-gradient(180deg, rgba(245,247,255,0.02), rgba(250,250,255,0.01));
+  background-blend-mode: normal, screen;
 }
 
 .animated-bg {
@@ -14,38 +16,39 @@
 .animated-orb {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(4px);
-  opacity: 0.45;
-  animation: orb-float 11s ease-in-out infinite;
+  filter: blur(12px);
+  opacity: 0.42;
+  mix-blend-mode: screen;
+  animation: orb-float 18s cubic-bezier(.25,.8,.25,1) infinite;
 }
 
 .animated-bg--login .orb-1,
 .animated-bg--app .orb-1 {
-  width: 260px;
-  height: 260px;
-  left: -70px;
-  top: 12%;
-  background: rgba(99, 102, 241, 0.35);
+  width: 320px;
+  height: 320px;
+  left: -90px;
+  top: 10%;
+  background: radial-gradient(circle at 30% 30%, rgba(99,102,241,0.42), rgba(99,102,241,0.18));
 }
 
 .animated-bg--login .orb-2,
 .animated-bg--app .orb-2 {
-  width: 340px;
-  height: 340px;
-  right: -100px;
+  width: 420px;
+  height: 420px;
+  right: -120px;
   top: 2%;
-  background: rgba(56, 189, 248, 0.28);
-  animation-delay: -3s;
+  background: radial-gradient(circle at 40% 40%, rgba(56,189,248,0.32), rgba(56,189,248,0.12));
+  animation-delay: -5s;
 }
 
 .animated-bg--login .orb-3,
 .animated-bg--app .orb-3 {
-  width: 240px;
-  height: 240px;
-  left: 35%;
-  bottom: -120px;
-  background: rgba(139, 92, 246, 0.28);
-  animation-delay: -6s;
+  width: 280px;
+  height: 280px;
+  left: 50%;
+  bottom: -140px;
+  background: radial-gradient(circle at 40% 40%, rgba(139,92,246,0.32), rgba(139,92,246,0.12));
+  animation-delay: -9s;
 }
 
 .animated-bg--app .orb-1 {
@@ -54,6 +57,16 @@
 
 .animated-bg--app .orb-3 {
   left: 65%;
+}
+
+.animated-veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  animation: veil-rotate 30s linear infinite;
+  opacity: 0.9;
 }
 
 .animate-fade-in-up {
@@ -69,9 +82,17 @@
   100% {
     transform: translate3d(0, 0, 0) scale(1);
   }
-  50% {
-    transform: translate3d(0, -18px, 0) scale(1.05);
+  30% {
+    transform: translate3d(12px, -22px, 0) scale(1.03) rotate(0.001deg);
   }
+  60% {
+    transform: translate3d(-8px, 8px, 0) scale(1.02) rotate(0.001deg);
+  }
+}
+
+@keyframes veil-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @keyframes fade-in-up {
@@ -92,5 +113,15 @@
   }
   50% {
     transform: translateY(-5px);
+  }
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .animated-orb,
+  .animated-veil,
+  .animate-fade-in-up,
+  .float-gentle {
+    animation: none !important;
   }
 }
